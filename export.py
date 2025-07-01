@@ -2,8 +2,10 @@ from trainer import TrainerData, TrainerMon
 from typing import List
 from resolve import ResolveMove, ResolveAbility, ResolveItem, ResolveBall, ResolveNature, ResolveStatus, ResolveTypes, ResolveNickname, ResolveTrainerClass
 from validity_checker import CheckTrainerValidity
+from config import Config
 
-def print_data(data: List[TrainerData], output_file: str):
+def print_data(data: List[TrainerData], config: Config):
+    output_file = config.OUTPUT_FILE
     with open(output_file, 'r', encoding='utf-8') as f:
         lines = f.readlines()
 

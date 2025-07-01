@@ -1,38 +1,73 @@
 from dataclasses import dataclass, field
-from typing import List, Tuple, Set
-from config import Config
+from typing import List, Set, Tuple
 
 @dataclass
 class TrainerMon:
-    dv: int = Config.DEFAULT_DV
-    abilityslot: int = 0
-    level: int = 0
-    pokemon: tuple[str, int] = ("SPECIES_NONE",0)
-    item: str = "ITEM_NONE"
-    move: List[str] = field(default_factory=lambda: ["MOVE_NONE", "MOVE_NONE", "MOVE_NONE", "MOVE_NONE"])
-    ability: str = "ABILITY_NONE"
-    ball: str = Config.DEFAULT_BALL
-    setivs: List[int] = field(default_factory=lambda: Config.DEFAULT_IVS.copy)
-    setevs: List[int] = field(default_factory=lambda: Config.DEFAULT_EVS.copy)
-    nature: str = "NATURE_HARDY"
-    shinylock: bool = False
-    # Additional flags
-    additionalFlags: List[str] = field(default_factory=list)
-    status: int = 0x0
-    stats: List[int] = field(default_factory=lambda: [0, 0, 0, 0, 0, 0])
-    # types: Tuple[str, str] = ("TYPE_NORMAL", "TYPE_NORMAL")
-    ppcounts: List[int] = field(default_factory=lambda: [0, 0, 0, 0])
-    nickname: str = ""
-    ballseal: int = 0
+    dv: int
+    abilityslot: int
+    level: int
+    pokemon: Tuple[str, int]
+    item: str
+    move: List[str]
+    ability: str
+    ball: str
+    setivs: List[int]
+    setevs: List[int]
+    nature: str
+    shinylock: bool
+    additionalFlags: List[str]
+    status: int
+    stats: List[int]
+    ppcounts: List[int]
+    nickname: str
+    ballseal: int
+
+    @classmethod
+    def create_default(cls, config):
+        return cls(
+            dv=config.DEFAULT_DV,
+            abilityslot=0,
+            level=0,
+            pokemon=("SPECIES_NONE", 0),
+            item="ITEM_NONE",
+            move=["MOVE_NONE", "MOVE_NONE", "MOVE_NONE", "MOVE_NONE"],
+            ability="ABILITY_NONE",
+            ball=config.DEFAULT_BALL,
+            setivs=config.DEFAULT_IVS.copy(),
+            setevs=config.DEFAULT_EVS.copy(),
+            nature="NATURE_HARDY",
+            shinylock=False,
+            additionalFlags=[],
+            status=0x0,
+            stats=[0, 0, 0, 0, 0, 0],
+            ppcounts=[0, 0, 0, 0],
+            nickname="",
+            ballseal=0
+        )
+
 
 @dataclass
 class TrainerData:
-    id: int = 0
-    name: str = ""
-    trainermontype: Set[str] = field(default_factory=set)
-    trainerclass: str = "Ethan"
-    nummons: int = 0
-    item: List[str] = field(default_factory=lambda: Config.DEFAULT_ITEMS.copy())
-    aiflags: Set[str] = field(default_factory=lambda: Config.DEFAULT_AI_FLAGS.copy())
-    battletype: bool = False
-    party: List[TrainerMon] = field(default_factory=list)
+    id: int
+    name: str
+    trainermontype: Set[str]
+    trainerclass: str
+    nummons: int
+    item: List[str]
+    aiflags: Set[str]
+    battletype: bool
+    party: List[TrainerMon]
+
+    @classmethod
+    def create_default(cls, config):
+        return cls(
+            id=0,
+            name="",
+            trainermontype=set(),
+            trainerclass="Ethan",
+            nummons=0,
+            item=config.DEFAULT_ITEMS.copy(),
+            aiflags=set(config.DEFAULT_AI_FLAGS),
+            battletype=False,
+            party=[]
+        )
